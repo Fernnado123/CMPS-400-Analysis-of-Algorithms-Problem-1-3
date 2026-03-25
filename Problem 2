@@ -1,0 +1,10 @@
+O(1)
+→ Loop runs fixed 15 times (constant)
+O(n)
+→ Single loop through n elements
+O(n²)
+→ Nested loops (n × n)
+O(log n)
+→ Doubles each time (1, 2, 4, 8…)
+O(log log n)
+→ Grows extremely fast (2 → 4 → 16 → 256…)
