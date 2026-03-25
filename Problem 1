@@ -1,0 +1,297 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <set>
+
+using namespace std;
+
+// Structures for results
+struct SearchResult {
+    int index;
+    int comparisons;
+    bool found;
+};
+
+struct SortResult {
+    int comparisons;
+    int swaps;
+    int moves;
+};
+
+// Global dataset
+vector<int> values;
+vector<int> original;
+int datasetID = -1;
+bool isSorted = false;
+set<int> usedIDs;
+
+// Generate unique dataset ID
+int generateUniqueID() {
+    int id;
+    do {
+        id = 10000 + rand() % 90000;
+    } while (usedIDs.count(id));
+    usedIDs.insert(id);
+    return id;
+}
+
+// Check if sorted
+bool checkSorted(const vector<int>& arr) {
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] < arr[i - 1]) return false;
+    }
+    return true;
+}
+
+// Display array
+void displayArray(const vector<int>& arr) {
+    for (int x : arr) cout << x << " ";
+    cout << endl;
+}
+
+// Linear Search
+SearchResult linearSearch(const vector<int>& arr, int target) {
+    SearchResult res = {-1, 0, false};
+    for (int i = 0; i < arr.size(); i++) {
+        res.comparisons++;
+        if (arr[i] == target) {
+            res.index = i;
+            res.found = true;
+            return res;
+        }
+    }
+    return res;
+}
+
+// Binary Search
+SearchResult binarySearch(const vector<int>& arr, int target) {
+    SearchResult res = {-1, 0, false};
+    int left = 0, right = arr.size() - 1;
+
+    while (left <= right) {
+        res.comparisons++;
+        int mid = (left + right) / 2;
+
+        if (arr[mid] == target) {
+            res.index = mid;
+            res.found = true;
+            return res;
+        }
+        else if (arr[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return res;
+}
+
+// Selection Sort
+SortResult selectionSort(vector<int>& arr) {
+    SortResult res = {0, 0, 0};
+    int n = arr.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            res.comparisons++;
+            if (arr[j] < arr[minIndex])
+                minIndex = j;
+        }
+        if (minIndex != i) {
+            swap(arr[i], arr[minIndex]);
+            res.swaps++;
+        }
+    }
+    return res;
+}
+
+// Insertion Sort
+SortResult insertionSort(vector<int>& arr) {
+    SortResult res = {0, 0, 0};
+
+    for (int i = 1; i < arr.size(); i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            res.comparisons++;
+            arr[j + 1] = arr[j];
+            res.moves++;
+            j--;
+        }
+        arr[j + 1] = key;
+        res.moves++;
+    }
+    return res;
+}
+
+// Pause function
+void pause() {
+    cout << "Press any key to return to Main Menu!\n";
+    cin.ignore();
+    cin.get();
+}
+
+int main() {
+    srand(time(0));
+    int choice;
+
+1    do {
+        cout << "\n*************** Algorithm Workbench ***************\n";
+        cout << "1- Create a new dataset\n";
+        cout << "2- Display current dataset\n";
+        cout << "3- Perform Linear Search\n";
+        cout << "4- Perform Binary Search\n";
+        cout << "5- Sort using Selection Sort\n";
+        cout << "6- Sort using Insertion Sort\n";
+        cout << "7- Restore original dataset\n";
+        cout << "0- Exit\n";
+        cout << "Choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            int n;
+            cout << "Enter dataset size (1-100): ";
+            cin >> n;
+
+            values.resize(n);
+            original.resize(n);
+
+            int method;
+            cout << "1- Manual\n2- Random\nChoice: ";
+            cin >> method;
+
+            if (method == 1) {
+                for (int i = 0; i < n; i++) {
+                    cout << "Enter value " << i + 1 << ": ";
+                    cin >> values[i];
+                }
+            } else {
+                int min, max;
+                cout << "Enter min: ";
+                cin >> min;
+                cout << "Enter max: ";
+                cin >> max;
+
+                for (int i = 0; i < n; i++) {
+                    values[i] = min + rand() % (max - min + 1);
+                }
+            }
+
+            original = values;
+            datasetID = generateUniqueID();
+            isSorted = checkSorted(values);
+
+            cout << "Dataset ID: " << datasetID << endl;
+            cout << "Size: " << n << endl;
+            cout << "Sorted: " << (isSorted ? "Yes" : "No") << endl;
+            displayArray(values);
+
+            pause();
+        }
+
+        else if (choice == 2) {
+            if (values.empty()) {
+                cout << "No dataset has been created yet.\n";
+            } else {
+                cout << "Dataset ID: " << datasetID << endl;
+                cout << "Size: " << values.size() << endl;
+                cout << "Sorted: " << (isSorted ? "Yes" : "No") << endl;
+                displayArray(values);
+            }
+            pause();
+        }
+
+        else if (choice == 3) {
+            if (values.empty()) {
+                cout << "No dataset exists.\n";
+            } else {
+                int target;
+                cout << "Enter target: ";
+                cin >> target;
+
+                SearchResult res = linearSearch(values, target);
+
+                cout << "Found: " << (res.found ? "Yes" : "No") << endl;
+                cout << "Index: " << res.index << endl;
+                cout << "Comparisons: " << res.comparisons << endl;
+            }
+            pause();
+        }
+
+        else if (choice == 4) {
+            if (values.empty()) {
+                cout << "No dataset exists.\n";
+            } else if (!isSorted) {
+                cout << "Binary Search cannot run because dataset is not sorted.\n";
+            } else {
+                int target;
+                cout << "Enter target: ";
+                cin >> target;
+
+                SearchResult res = binarySearch(values, target);
+
+                cout << "Found: " << (res.found ? "Yes" : "No") << endl;
+                cout << "Index: " << res.index << endl;
+                cout << "Comparisons: " << res.comparisons << endl;
+            }
+            pause();
+        }
+
+        else if (choice == 5) {
+            if (values.empty()) {
+                cout << "No dataset exists.\n";
+            } else {
+                cout << "Before:\n";
+                displayArray(values);
+
+                SortResult res = selectionSort(values);
+                isSorted = true;
+
+                cout << "After:\n";
+                displayArray(values);
+
+                cout << "Comparisons: " << res.comparisons << endl;
+                cout << "Swaps: " << res.swaps << endl;
+            }
+            pause();
+        }
+
+        else if (choice == 6) {
+            if (values.empty()) {
+                cout << "No dataset exists.\n";
+            } else {
+                cout << "Before:\n";
+                displayArray(values);
+
+                SortResult res = insertionSort(values);
+                isSorted = true;
+
+                cout << "After:\n";
+                displayArray(values);
+
+                cout << "Comparisons: " << res.comparisons << endl;
+                cout << "Moves: " << res.moves << endl;
+            }
+            pause();
+        }
+
+        else if (choice == 7) {
+            if (values.empty()) {
+                cout << "No dataset exists.\n";
+            } else {
+                values = original;
+                isSorted = checkSorted(values);
+
+                cout << "Dataset restored.\n";
+                displayArray(values);
+            }
+            pause();
+        }
+
+    } while (choice != 0);
+
+    cout << "Goodbye!\n";
+    return 0;
+}
