@@ -1,0 +1,15 @@
+1. Why asymptotic analysis is better
+
+Asymptotic analysis is more useful because it evaluates performance independent of hardware, focusing on how algorithms scale as input size grows rather than relying on machine-specific timing.
+
+2. Why Binary Search requires sorted data
+
+Binary Search depends on ordering to eliminate half of the dataset each step without sorting it cannot determine which half to discard.
+
+3. Nearly sorted array
+
+Insertion Sort is better because it performs close to O(n) when data is already nearly sorted, making it much faster than Selection Sort.
+
+4. Memory writes expensive
+
+Selection Sort is better because it performs fewer swaps (writes), while Insertion Sort may shift many elements repeatedly.
