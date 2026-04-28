@@ -1,0 +1,66 @@
+Problem 1
+for (int i = 0; i < r; i++) {
+    for (int j = 0; j < c; j++) {
+        cout << A[i][j] << " ";
+    }
+}
+
+Time Complexity: O(r × c)
+Explanation:
+The outer loop runs r times and the inner loop runs c times for each iteration of i. Therefore, total operations = r * c.
+
+Problem 2
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        C[i][j] = A[i][j] + B[i][j];
+    }
+}
+
+Time Complexity: O(n²)
+Explanation:
+Two nested loops each run n times, resulting in n × n = n² operations.
+
+Problem 3
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        int sum = 0;
+        for (int k = 0; k < n; k++) {
+            sum += A[i][k] * B[k][j];
+        }
+        C[i][j] = sum;
+    }
+}
+
+Time Complexity: O(n³)
+Explanation:
+There are three nested loops, each running n times. Total operations = n × n × n = n³. This is the standard matrix multiplication complexity.
+
+Problem 4
+int i = 1;
+while (i < n) {
+    i *= 2;
+}
+
+Time Complexity: O(log n)
+Explanation:
+The value of i doubles each iteration (1, 2, 4, 8, ...). The number of times you can double before reaching n is logarithmic.
+
+Problem 5
+for (int mask = 0; mask < (1 << n); mask++) {
+    for (int j = 0; j < n; j++) {
+        if (mask & (1 << j)) {
+            cout << arr[j] << " ";
+        }
+    }
+}
+
+Time Complexity: O(n × 2ⁿ)
+Explanation:
+The outer loop runs 2ⁿ times (all subsets).
+The inner loop runs n times for each subset.
+Total = n × 2ⁿ.
+
+
+
+
+
