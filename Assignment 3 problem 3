@@ -1,0 +1,125 @@
+
+1. Prove that 4n^2 + 7n + 25 = O(n^2)
+
+
+Claim:
+4n^2 + 7n + 25 = O(n^2)
+
+Proof:
+Let f(n) = 4n^2 + 7n + 25.
+
+For n >= 1:
+7n <= 7n^2
+25 <= 25n^2
+
+So,
+f(n) = 4n^2 + 7n + 25
+     <= 4n^2 + 7n^2 + 25n^2
+     = 36n^2
+
+Choose c = 36 and n0 = 1.
+
+Then for all n >= n0:
+f(n) <= c n^2.
+
+Conclusion:
+Therefore, 4n^2 + 7n + 25 = O(n^2).
+
+
+
+2. Prove that 5n^3 + 2n^2 + 10 = Ω(n^3)
+
+
+Claim:
+5n^3 + 2n^2 + 10 = Ω(n^3)
+
+Proof:
+Let f(n) = 5n^3 + 2n^2 + 10.
+
+For n >= 1:
+2n^2 >= 0
+10 >= 0
+
+So,
+f(n) >= 5n^3
+
+Choose c = 5 and n0 = 1.
+
+Then for all n >= n0:
+f(n) >= c n^3.
+
+Conclusion:
+Therefore, 5n^3 + 2n^2 + 10 = Ω(n^3).
+
+
+
+3. Prove that 7n^2 + 3n + 100 = Θ(n^2)
+
+
+We must prove BOTH O(n^2) and Ω(n^2).
+
+(1) O(n^2)
+
+
+Claim:
+7n^2 + 3n + 100 = O(n^2)
+
+Proof:
+For n >= 1:
+3n <= 3n^2
+100 <= 100n^2
+
+So:
+f(n) <= 7n^2 + 3n^2 + 100n^2
+     = 110n^2
+
+Choose c = 110, n0 = 1.
+
+Thus f(n) = O(n^2).
+
+
+(2) Ω(n^2)
+
+
+Claim:
+7n^2 + 3n + 100 = Ω(n^2)
+
+Proof:
+For n >= 1:
+3n >= 0
+100 >= 0
+
+So:
+f(n) >= 7n^2
+
+Choose c = 7, n0 = 1.
+
+Thus f(n) = Ω(n^2).
+
+Conclusion:
+Since f(n) is both O(n^2) and Ω(n^2),
+7n^2 + 3n + 100 = Θ(n^2).
+
+
+4. Disprove that n^2 + 10n = O(n)
+
+
+Claim:
+n^2 + 10n is O(n) (to be disproved)
+
+Proof (by contradiction idea):
+
+Assume there exist constants c > 0 and n0 such that:
+n^2 + 10n <= c n for all n >= n0.
+
+Divide both sides by n (n > 0):
+n + 10 <= c
+
+But as n → ∞, the left side (n + 10) grows without bound,
+so it cannot be less than or equal to a constant c.
+
+This contradicts the assumption.
+
+Conclusion:
+No such constant c exists, so
+n^2 + 10n is NOT O(n).
