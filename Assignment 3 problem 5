@@ -1,0 +1,95 @@
+
+1. Prove there are infinitely many primes (Contradiction)
+
+
+Claim:
+There are infinitely many prime numbers.
+
+Assumption for Contradiction:
+Assume there are only finitely many primes:
+p1, p2, p3, ..., pn.
+
+Logical Reasoning:
+Construct the number:
+N = p1 * p2 * p3 * ... * pn + 1
+
+Now divide N by any prime pi:
+N mod pi = 1
+
+So N is not divisible by any listed prime.
+
+Thus N is either prime itself or has a prime factor not in the list.
+
+Contradiction:
+This contradicts the assumption that p1...pn contains all primes.
+
+Conclusion:
+Therefore, there must be infinitely many primes.
+
+
+2. No smallest positive rational number (Contradiction)
+
+
+Claim:
+There is no smallest positive rational number.
+
+Assumption for Contradiction:
+Assume there exists a smallest positive rational number r.
+
+Logical Reasoning:
+Since r is positive and rational, consider r/2.
+
+- r/2 is also positive
+- r/2 is rational
+- r/2 < r
+
+Contradiction:
+This contradicts the assumption that r is the smallest positive rational number.
+
+Conclusion:
+Therefore, there is no smallest positive rational number.
+
+
+3. If n^2 is odd, then n is odd (Contrapositive)
+
+
+Original Claim:
+If n^2 is odd, then n is odd.
+
+Contrapositive:
+If n is even, then n^2 is even.
+
+Proof of Contrapositive:
+Assume n is even.
+Then n = 2k for some integer k.
+
+n^2 = (2k)^2 = 4k^2 = 2(2k^2)
+
+So n^2 is even.
+
+Conclusion:
+Since the contrapositive is true, the original statement is true.
+
+
+
+4. Counterexample
+
+
+Claim:
+For every integer n, if n^2 is positive, then n is positive.
+
+Counterexample:
+Let n = -2.
+
+Compute:
+n^2 = (-2)^2 = 4, which is positive.
+
+But:
+n = -2 is NOT positive.
+
+Explanation:
+The condition n^2 > 0 does NOT guarantee n > 0,
+because negative numbers also have positive squares.
+
+Conclusion:
+The statement is false.
