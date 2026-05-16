@@ -1,0 +1,30 @@
+Statement:
+If a and b are even integers, then a + b is even.
+
+Proof (Direct):
+
+Definition of even integer:
+An integer x is even if there exists an integer k such that x = 2k.
+
+Let a and b be even integers.
+Then, by definition of even integers, there exist integers m and k such that:
+    a = 2m
+    b = 2k
+
+Now consider the sum:
+    a + b = 2m + 2k
+
+Factor out 2:
+    a + b = 2(m + k)
+
+Since m + k is an integer (integers are closed under addition),
+let t = (m + k), where t is an integer.
+
+So:
+    a + b = 2t
+
+This shows that a + b is divisible by 2.
+
+Conclusion:
+Since a + b can be written in the form 2t for some integer t,
+a + b is even.
