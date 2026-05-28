@@ -1,0 +1,153 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <queue>
+#include <climits>
+#include <string>
+
+using namespace std;
+
+// ---------- Graph ----------
+class Graph {
+private:
+    map<string, vector<pair<string, int> > > adj;
+
+public:
+    void addEdge(string u, string v, int weight) {
+        adj[u].push_back(make_pair(v, weight));
+        adj[v].push_back(make_pair(u, weight)); // undirected graph
+    }
+
+    void shortestPath(string start, string end) {
+        map<string, int> dist;
+        map<string, string> parent;
+
+        // initialize distances
+        for (map<string, vector<pair<string, int> > >::iterator it = adj.begin();
+             it != adj.end(); ++it) {
+            dist[it->first] = INT_MAX;
+        }
+
+        typedef pair<int, string> P;
+
+        priority_queue<P, vector<P>, greater<P> > pq;
+
+        dist[start] = 0;
+        pq.push(make_pair(0, start));
+
+        while (!pq.empty()) {
+            P top = pq.top();
+            pq.pop();
+
+            int d = top.first;
+            string node = top.second;
+
+            if (d > dist[node]) continue;
+
+            vector<pair<string, int> > &neighbors = adj[node];
+
+            for (vector<pair<string, int> >::iterator it = neighbors.begin();
+                 it != neighbors.end(); ++it) {
+
+                string next = it->first;
+                int weight = it->second;
+
+                if (dist[node] + weight < dist[next]) {
+                    dist[next] = dist[node] + weight;
+                    parent[next] = node;
+                    pq.push(make_pair(dist[next], next));
+                }
+            }
+        }
+
+        if (dist[end] == INT_MAX) {
+            cout << "No path found!" << endl;
+            return;
+        }
+
+        // Reconstruct path
+        vector<string> path;
+        string current = end;
+
+        while (current != start) {
+            path.push_back(current);
+            current = parent[current];
+        }
+        path.push_back(start);
+
+        cout << "\nShortest Route: ";
+
+        for (int i = (int)path.size() - 1; i >= 0; i--) {
+            cout << path[i];
+            if (i != 0) cout << " -> ";
+        }
+
+        cout << "\nTotal Time: " << dist[end] << " units" << endl;
+    }
+
+    void printGraph() {
+        cout << "\n--- Road Network ---\n";
+
+        for (map<string, vector<pair<string, int> > >::iterator it = adj.begin();
+             it != adj.end(); ++it) {
+
+            cout << it->first << " -> ";
+
+            vector<pair<string, int> > &edges = it->second;
+
+            for (vector<pair<string, int> >::iterator jt = edges.begin();
+                 jt != edges.end(); ++jt) {
+
+                cout << "(" << jt->first << ", " << jt->second << ") ";
+            }
+
+            cout << endl;
+        }
+    }
+};
+
+// ---------- MAIN ----------
+int main() {
+    Graph g;
+
+    // Sample map
+    g.addEdge("A", "B", 4);
+    g.addEdge("A", "C", 2);
+    g.addEdge("B", "C", 1);
+    g.addEdge("B", "D", 5);
+    g.addEdge("C", "D", 8);
+    g.addEdge("C", "E", 10);
+    g.addEdge("D", "E", 2);
+
+    cout << "=== Smart Route Planner (C++98) ===\n";
+
+    int choice;
+
+    while (true) {
+        cout << "\n1. Show Map\n";
+        cout << "2. Find Shortest Route\n";
+        cout << "3. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            g.printGraph();
+        }
+        else if (choice == 2) {
+            string start, end;
+            cout << "Start: ";
+            cin >> start;
+            cout << "End: ";
+            cin >> end;
+            g.shortestPath(start, end);
+        }
+        else if (choice == 3) {
+            break;
+        }
+        else {
+            cout << "Invalid choice!" << endl;
+        }
+    }
+
+    return 0;
+}
